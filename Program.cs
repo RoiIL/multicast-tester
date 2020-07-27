@@ -21,7 +21,7 @@ namespace MUC
             do
             {
                 Console.WriteLine("Enter 'S' for Sending Multicast");
-                Console.WriteLine("Enter 'R' for Sending Multicast");
+                Console.WriteLine("Enter 'R' for Receiving Multicast");
                 Console.WriteLine("Enter 'M' for Sending and Receiving Multicast");
                 userInput = Console.ReadLine();
                 if (userInput.ToLower().Equals("s") ||
