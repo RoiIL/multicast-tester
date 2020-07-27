@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "MulticastSender": {
+    "MulticastTester": {
       "commandName": "Project"
     }
   }
