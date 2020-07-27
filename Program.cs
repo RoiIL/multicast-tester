@@ -16,10 +16,31 @@ namespace MUC
             Console.WriteLine("                         *** Sending Multicast ***     ");
             Console.WriteLine(Environment.NewLine);
 
-            // Thread.Sleep(15000);
+            bool isCorrectInput = false;
+            string userInput = string.Empty;
+            do
+            {
+                Console.WriteLine("Enter 'S' for Sending Multicast");
+                Console.WriteLine("Enter 'R' for Sending Multicast");
+                Console.WriteLine("Enter 'M' for Sending and Receiving Multicast");
+                userInput = Console.ReadLine();
+                if (userInput.ToLower().Equals("s") ||
+                    userInput.ToLower().Equals("r") ||
+                    userInput.ToLower().Equals("m"))
+                {
+                    isCorrectInput = true;
+                }
+                else
+                {
+                    Console.WriteLine(Environment.NewLine);
+                    Console.WriteLine("Come on! Really??? Ok, let's try again...");
+                    Console.WriteLine(Environment.NewLine);
+                }
+            } while (!isCorrectInput);
+            
 
             MulticastManager mucManager = new MulticastManager();
-            mucManager.runMuc();
+            mucManager.runMuc(userInput.ToLower());
         }
     }
 }

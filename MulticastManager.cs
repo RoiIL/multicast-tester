@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace MUC
 {
@@ -14,7 +15,7 @@ namespace MUC
             uniToMultiList = new List<MulticastSender>();
         }
 
-        public void runMuc()
+        public void runMuc(string userChoice)
         {
             Config config = new Config();
             Console.WriteLine("Reading configuration");
@@ -23,9 +24,19 @@ namespace MUC
 
             foreach (Peer peer in connection.peers)
             {
-                MulticastSender uniToMulti = new MulticastSender(connection.remoteAddress, connection.localAddress, peer);
-                uniToMulti.Send();
-                uniToMultiList.Add(uniToMulti);
+                switch(userChoice)
+                {
+                    case "r":
+                        new MulticastReceiver(connection.remoteAddress, connection.localAddress, peer).Receive();
+                        break;
+                    case "s":
+                        new MulticastSender(connection.remoteAddress, connection.localAddress, peer).Send();
+                        break;
+                    default:
+                        new MulticastSender(connection.remoteAddress, connection.localAddress, peer).Send();
+                        new MulticastReceiver(connection.remoteAddress, connection.localAddress, peer).Receive();
+                        break;
+                }
             }
         }
     }
