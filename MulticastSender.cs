@@ -12,26 +12,24 @@ namespace MUC
     {
         protected UdpClient sender;
 
-        private const int bindPort = 9191;
-        private int multicastPort = 0;
-
-        protected IPEndPoint sendToEp;
+        private const int bindPort = 9191;             
 
         private IPAddress multicastAddress;
-        private IPAddress remote;
-        private IPAddress local;
+        private int multicastPort = 0;
+        
+        private IPAddress localAddress;
+        protected IPEndPoint sendToEp;
 
-        public MulticastSender(string remoteAddress, string localAddress, Peer peer)
+        public MulticastSender(string remoteAddress, string local, Peer peer)
         {
             bool parsed = IPAddress.TryParse(peer.multicast, out multicastAddress);
-            parsed &= IPAddress.TryParse(remoteAddress, out remote);
-            if (string.IsNullOrEmpty(localAddress))
+            if (string.IsNullOrEmpty(local))
             {
-                local = IPAddress.Any;
+                localAddress = IPAddress.Any;
             }
             else
             {
-                parsed &= IPAddress.TryParse(localAddress, out local);
+                parsed &= IPAddress.TryParse(local, out localAddress);
             }
             
             if (!parsed)
@@ -47,7 +45,7 @@ namespace MUC
 
             try
             {
-                sender.Client.Bind(new IPEndPoint(local, bindPort));
+                sender.Client.Bind(new IPEndPoint(localAddress, bindPort));
             }
             catch (SocketException)
             {
